@@ -6,8 +6,9 @@ const getAll = async () => {
   return accounts
 }
 
-const getById = id => {
-  // DO YOUR MAGIC
+const getById = async id => {
+  const account = await db('accounts').where('id', id).first()
+  return account
 }
 
 const create = account => {
