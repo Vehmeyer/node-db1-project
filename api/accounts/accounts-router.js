@@ -24,12 +24,16 @@ router.get('/:id', checkAccountId, async (req, res, next) => {
   }
 })
 
-router.post('/', (req, res, next) => {
-  // DO YOUR MAGIC
-  // checkAccountPayload
+router.post('/', checkAccountPayload, async (req, res, next) => {
+  try {
+    const account = Account.create(req.body)
+    res.status(201).json(account)
+  } catch(err) {
+      next(err)
+  }
 })
 
-router.put('/:id', checkAccountId, (req, res, next) => {
+router.put('/:id', checkAccountId, checkAccountPayload, (req, res, next) => {
   // DO YOUR MAGIC
   // checkAccountPayload
 });
