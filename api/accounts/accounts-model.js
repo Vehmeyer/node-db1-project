@@ -19,8 +19,10 @@ const updateById = (id, account) => {
   // DO YOUR MAGIC
 }
 
-const deleteById = id => {
-  // DO YOUR MAGIC
+const deleteById = async id => {
+  const toBeDeleted = await getById(id)
+  const numOfDeletedRecords = await db('accounts').where('id', id).del()
+  return toBeDeleted
 }
 
 module.exports = {
