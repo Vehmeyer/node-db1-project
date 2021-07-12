@@ -26,16 +26,20 @@ router.get('/:id', checkAccountId, async (req, res, next) => {
 
 router.post('/', checkAccountPayload, async (req, res, next) => {
   try {
-    const account = Account.create(req.body)
+    const account = await Account.create(req.body)
     res.status(201).json(account)
   } catch(err) {
       next(err)
   }
 })
 
-router.put('/:id', checkAccountId, checkAccountPayload, (req, res, next) => {
-  // DO YOUR MAGIC
-  // checkAccountPayload
+router.put('/:id', checkAccountId, checkAccountPayload, checkAccountNameUnique, async (req, res, next) => {
+  try {
+    const updated = await Account.updateById(req.params.id, req.body)
+    res.json(updated)
+  } catch (err) {
+    next(err)
+  }
 });
 
 router.delete('/:id', checkAccountId, async (req, res, next) => {
